@@ -16,11 +16,24 @@ export async function apiFetch<T>(endpoint: string, options: RequestInit = {}): 
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, { ...options, headers });
-  const data = await response.json();
+  let response: Response;
+  try {
+    response = await fetch(`${API_BASE_URL}${endpoint}`, { ...options, headers });
+  } catch {
+    throw new Error('No se pudo conectar con el servidor. Verifica que el backend esté en ejecución.');
+  }
+
+  const data = await response.json().catch(() => null);
+
+  if (response.status === 401 && token && !endpoint.startsWith('/auth/')) {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('user');
+    window.location.assign('/login');
+  }
 
   if (!response.ok) {
-    throw new Error(data.message || 'Error en la comunicación con la API REST');
+    const message = Array.isArray(data?.message) ? data.message.join(', ') : data?.message;
+    throw new Error(message || `Error en la comunicación con la API REST (HTTP ${response.status} en ${endpoint})`);
   }
   return data as T;
 }

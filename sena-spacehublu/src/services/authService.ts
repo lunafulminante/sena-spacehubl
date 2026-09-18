@@ -18,7 +18,22 @@ export interface AuthResponse {
   user: User;
 }
 
+export interface RegisterData {
+  nombreCompleto: string;
+  email: string;
+  password: string;
+  role: 'Aprendiz' | 'Instructor';
+  ficha?: string;
+}
+
 export const authService = {
+  register: async (data: RegisterData): Promise<{ message: string }> => {
+    return apiFetch<{ message: string }>('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+
   login: async (credentials: LoginCredentials): Promise<AuthResponse> => {
     return apiFetch<AuthResponse>('/auth/login', {
       method: 'POST',

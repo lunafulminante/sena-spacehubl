@@ -5,7 +5,7 @@
 // =================================================================
 import { Outlet, useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../../context/useAuth';
 
 export default function MainLayout() {
   const { user, logout } = useAuth();
@@ -17,25 +17,29 @@ export default function MainLayout() {
   };
 
   return (
-    <div className="layout-shell min-h-screen bg-slate-900 text-slate-100 flex flex-col">
+    <div className="layout-shell min-h-screen text-ink-100 flex flex-col">
       <NavBar />
-      <div className="bg-slate-800/80 border-b border-slate-700/60 px-6 py-2.5 flex items-center justify-between shadow-inner text-xs font-mono">
-        <div className="flex items-center gap-2">
-          <span className="inline-block w-2 h-2 rounded-full bg-sena-green animate-pulse"></span>
-          <span className="text-slate-400">Sesión Activa:</span>
-          <strong className="text-white">{user?.nombreCompleto || 'Usuario Autenticado'}</strong>
-          <span className="bg-sena-green/20 text-sena-green px-2 py-0.5 rounded text-[10px] font-bold border border-sena-green/30">
+      <div className="px-6 py-3 flex items-center justify-between text-xs">
+        <div className="flex items-center gap-3">
+          <span className="w-8 h-8 rounded-full bg-linear-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center text-white font-bold">
+            {user?.nombreCompleto?.charAt(0) || 'U'}
+          </span>
+          <div className="leading-tight">
+            <strong className="block text-white text-sm">{user?.nombreCompleto || 'Usuario Autenticado'}</strong>
+            <span className="text-ink-400">Sesión activa</span>
+          </div>
+          <span className="bg-violet-500/20 text-violet-200 px-2.5 py-1 rounded-full text-[10px] font-bold border border-violet-400/30">
             {user?.role || 'Rol'}
           </span>
         </div>
         <button
           onClick={handleLogout}
-          className="px-3 py-1 bg-rose-900/60 hover:bg-rose-700 text-rose-200 border border-rose-500/50 rounded-lg text-xs font-bold transition shadow-sm"
+          className="px-3.5 py-1.5 bg-ink-800 hover:bg-rose-600/80 text-ink-200 hover:text-white border border-ink-700 hover:border-rose-500 rounded-lg text-xs font-semibold transition cursor-pointer"
         >
           Cerrar Sesión
         </button>
       </div>
-      <main className="content-viewport flex-1 p-6">
+      <main className="content-viewport flex-1 px-6 pb-8 pt-2">
         <Outlet />
       </main>
     </div>

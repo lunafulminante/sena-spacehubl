@@ -1,5 +1,48 @@
-*{
-  margin: 0;
-  font-family:'franklin gothic medium','arial narrow',
-  arial, sans-serif;
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  /* Neutros con tinte violeta (fondos, superficies, bordes y textos) */
+  --color-ink-50: #f7f5ff;
+  --color-ink-100: #ece8fb;
+  --color-ink-200: #d9d3f3;
+  --color-ink-300: #bdb4e3;
+  --color-ink-400: #aba2d6;
+  --color-ink-500: #8f86bd;
+  --color-ink-600: #574c8a;
+  --color-ink-700: #3b3266;
+  --color-ink-800: #261e4a;
+  --color-ink-900: #181235;
+  --color-ink-950: #0e0a24;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink-100);
+  background-color: var(--color-ink-950);
+  background-image:
+    radial-gradient(60rem 40rem at 8% -10%, rgb(124 58 237 / 0.28), transparent 60%),
+    radial-gradient(50rem 35rem at 100% 0%, rgb(217 70 239 / 0.16), transparent 55%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgb(167 139 250 / 0.4);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ink-950);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ink-700);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ink-600);
 }

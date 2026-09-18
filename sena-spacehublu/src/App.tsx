@@ -10,14 +10,17 @@ import EquiposPage from './pages/EquiposPage/EquiposPage';
 import NuevoEquipoPage from './pages/NuevoEquipoPage/NuevoEquipoPage';
 import DetalleEquipoPage from './pages/DetalleEquipoPage/DetalleEquipoPage';
 import LoginPage from './pages/LoginPage/LoginPage';
+import RegisterPage from './pages/RegisterPage/RegisterPage';
 // 🛡️ Importamos la guardia de seguridad
 import ProtectedRoute from './routes/ProtectedRoute';
+import PrestamosPage from './pages/PrestamosPage/PrestamosPage';
 
 export default function App() {
   return (
     <Routes>
       {/* 1. Ruta Pública (Accesible para cualquiera) */}
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/registro" element={<RegisterPage />} />
 
       {/* 2. Nivel 1 de Protección: Requiere cualquier usuario autenticado (Aprendiz, Instructor, Admin) */}
       <Route element={<ProtectedRoute />}>
@@ -26,6 +29,7 @@ export default function App() {
           <Route path="dashboard" element={<DashboardPage />} />
           <Route path="inventario" element={<EquiposPage />} />
 
+          <Route path="prestamos" element={<PrestamosPage />} />
           {/* 3. Nivel 2 de Protección (RBAC): Exclusivo para el rol 'Administrador' */}
           <Route element={<ProtectedRoute requiredRole="Administrador" />}>
             <Route path="inventario/nuevo" element={<NuevoEquipoPage />} />
